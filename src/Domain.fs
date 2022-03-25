@@ -119,7 +119,7 @@ let permute percent maze =
     let grid = maze.grid
     let interior x y =
         // Exclude the first and last element in each array because those are the outer walls
-        let (xBound, yBound) = grid[0].Length - 2, grid.Length - 2
+        let (xBound, yBound) = grid.Length - 2, grid[0].Length - 2
         0 < x && x < xBound && 0 < y && y < yBound
     maze |> map (fun x y state ->
                 if (Connection(x,y,maze.bounds).isValid()) && interior x y && rand.Next(100) < percent then
@@ -133,7 +133,7 @@ let carve percent maze =
     let grid = maze.grid
     let interior x y =
         // Exclude the first and last element in each array because those are the outer walls
-        let (xBound, yBound) = grid[0].Length - 2, grid.Length - 2
+        let (xBound, yBound) = grid.Length - 2, grid[0].Length - 2
         0 < x && x < xBound && 0 < y && y < yBound
     maze |> map (fun x y state ->
         if (Connection(x,y,maze.bounds).isValid()) && interior x y && rand.Next(100) < percent then
