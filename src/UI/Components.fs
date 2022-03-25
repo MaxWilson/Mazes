@@ -115,9 +115,9 @@ module Maze =
     open Domain
     open Fable.Core.JsInterop
     type MouseMode = CarvingSpace | BuildingWalls | Inactive
+    let gridSize = 20
     let nearestIntersection maze (xPixel, yPixel) =
-        let gridSize = 20
-        let yBase = (maze.grid[0].Length - 1) * gridSize
+        let yBase = (maze.grid[0].Length) * gridSize
         let maybe (xPixel, yPixel) =
             let x,y = xPixel / gridSize, (yBase - yPixel) / gridSize
             let candidate = Connection(x,y,maze.bounds)
@@ -195,7 +195,7 @@ module Maze =
             "onMouseDown" ==> fun e ->
                 let pos = e?target?getStage()?getPointerPosition()
                 // if it's within the maze
-                if pos?x < maze.grid.Length * 20 && pos?y < maze.grid[0].Length then
+                if pos?x < maze.grid.Length * 20 && pos?y < maze.grid[0].Length * 20 then
                     let pos = nearestIntersection maze (pos?x, pos?y)
                     if isRightClick e then
                         modeChange(BuildingWalls, Some(pos))
@@ -205,7 +205,7 @@ module Maze =
             if mode = BuildingWalls then
                 "onMouseOver" ==> fun e ->
                     let pos = e?target?getStage()?getPointerPosition()
-                    if pos?x < maze.grid.Length * 20 && pos?y < maze.grid[0].Length then
+                    if pos?x < maze.grid.Length * 20 && pos?y < maze.grid[0].Length * 20 then
                         // if it's within the maze
                         let pos = nearestIntersection maze (pos?x, pos?y)
                         modeChange(BuildingWalls, Some(pos))
